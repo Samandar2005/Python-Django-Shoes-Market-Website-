@@ -1,0 +1,51 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<div class="hello">
+  <div class="buy_now_bt">
+    <button class="buy_text11">
+      {% if perms.home.can_add_book %}
+        <a class="main_a1" href="{% url 'brand-add' %}">Add</a>
+      {% endif %}
+    </button>
+  </div>
+  <div class="buy_now_bt">
+    <button class="buy_text11">
+      <a class="main_a1" href="{% url 'main' %}">Exit</a>
+    </button>
+  </div>
+
+</div>
+
+<form action="" method="get">
+  <input type="text" placeholder="name" name="name" />
+  <input type="submit" value="Search" />
+</form>
+
+
+<div class="layout_padding gallery_section">
+  <div class="container">
+    <ul class="myul">
+      {% for item in brand %}
+      <li class="myli">
+        <div class="best_shoes">
+          <p class="best_text">{{item.name}}</p>
+          <div class="star_text">
+            <div class="left_part" >
+              {% if perms.home.can_change_book %}
+                <a class="main_a" href="{% url 'brand-change' item.id %}">Change</a>
+              {% endif %}
+
+              {% if perms.home.can_delete_book %}
+                <a class="main_a" href="{% url 'brand-delete' item.id %}">Delete</a>
+              {% endif %}
+
+              {% if 'Xaridor' in user.groups.all.0.name %}
+                <a class="main_a" href="{% url 'shoes-order' item.id %}">Order</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+</div>

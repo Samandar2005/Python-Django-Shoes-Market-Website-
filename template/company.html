@@ -1,0 +1,64 @@
+{% load static %}
+<link rel="stylesheet" href={% static 'css/main.css' %}>
+<link rel="stylesheet" href="{% static 'css/input.css' %}">
+<style>
+  .best_shoes{
+    width: 240px;
+    margin-top: 20px;
+    height: 200px;
+  }
+</style>
+<div class="hello">
+  <div class="buy_now_bt">
+    <button class="buy_text11">
+      {% if perms.home.can_add_book %}
+        <a class="main_a1" href="{% url 'company-add' %}">Add</a>
+      {% endif %}
+    </button>
+  </div>
+  <div class="buy_now_bt">
+    <button class="buy_text11">
+      <a class="main_a1" href="{% url 'main' %}">Exit</a>
+    </button>
+  </div>
+
+</div>
+
+<form action="" method="get">
+  <input class="input" type="text" placeholder="title" name="title" />
+  <input class="input" type="number" placeholder="workers" name="workers" />
+  <input class="input" type="number" placeholder="annual_income" name="annual_income" />
+  <input class="input1" type="submit" value="Search" />
+</form>
+
+
+<div class="layout_padding gallery_section">
+  <div class="container">
+    <ul class="myul">
+      {% for item in company %}
+      <li class="myli">
+        <div class="best_shoes">
+          <p class="best_text">{{item.title}}</p>
+          <p class="best_text">{{item.workers}}</p>
+          <p class="best_text">{{item.annual_income}}</p>
+          <p class="best_text">{{item.email}}</p>
+          <div class="star_text">
+            <div class="left_part" >
+              {% if perms.home.can_change_book %}
+                <a class="main_a" href="{% url 'company-change' item.id %}">Change</a>
+              {% endif %}
+
+              {% if perms.home.can_delete_book %}
+                <a class="main_a" href="{% url 'company-delete' item.id %}">Delete</a>
+              {% endif %}
+
+              {% if 'Xaridor' in user.groups.all.0.name %}
+                <a class="main_a" href="{% url 'shoes-order' item.id %}">Order</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+</div>

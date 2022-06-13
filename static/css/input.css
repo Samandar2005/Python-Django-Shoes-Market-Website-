@@ -1,0 +1,18 @@
+.input{
+  width: 150px;
+  height: 30px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 10px;
+
+}
+.input1{
+    text-align: center;
+    width: 70px;
+    height: 30px;
+    border-radius: 30px;
+    color: white;
+    background-color: black;
+}
