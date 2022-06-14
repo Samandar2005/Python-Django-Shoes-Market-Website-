@@ -219,7 +219,6 @@ class ShoesDeleteView(DeleteView):
 
 
 def main(request):
-    print(User)
     bks = Shoes.objects.all()
 
     context = {'shoes': bks}
@@ -236,6 +235,7 @@ def contact(request):
 
 def racingboots(request):
     return render(request, "racing boots.html")
+
 
 
 def user_login_view(request):
@@ -277,7 +277,8 @@ def user_register_view(request):
             return render(request, template_name='user-register.html', context={'form': form})
 
 
-def shoes(request):
-    bks = Shoes.objects.all()
-    context = {'shoes': bks}
-    return render(request, "shoes_base.html", context=context)
+
+class ShoesListView(ListView):
+    queryset = Shoes.objects.all()
+    template_name = 'shoes_base.html'
+    context_object_name = 'shoes'
