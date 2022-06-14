@@ -1,6 +1,8 @@
 .myli {
   max-width: 367px;
-  max-height: 800px;
+  min-width: 367px;
+  max-height: 700px;
+  min-height: 700px;
   padding-right: 15px;
   padding-left: 15px;
   display: inline-flex;

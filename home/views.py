@@ -237,7 +237,6 @@ def racingboots(request):
     return render(request, "racing boots.html")
 
 
-
 def user_login_view(request):
     if request.method == 'GET':
         form = UserLoginForm()
@@ -277,8 +276,7 @@ def user_register_view(request):
             return render(request, template_name='user-register.html', context={'form': form})
 
 
-
-class ShoesListView(ListView):
+class ShoesListViewMain(ListView):
     queryset = Shoes.objects.all()
     template_name = 'shoes_base.html'
     context_object_name = 'shoes'
