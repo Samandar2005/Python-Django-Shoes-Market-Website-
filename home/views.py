@@ -239,7 +239,6 @@ def racingboots(request):
 
 
 def user_login_view(request):
-    print("hello1")
     if request.method == 'GET':
         form = UserLoginForm()
         return render(request, template_name='user-login.html', context={'form': form})
@@ -248,10 +247,8 @@ def user_login_view(request):
         if form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
-
-            user = authenticate(username=username, password=password)
-
-            if user:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
                 login(request=request, user=user)
                 return redirect('shoes')
             else:
