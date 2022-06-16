@@ -43,5 +43,6 @@ urlpatterns = [
     path('register/', user_register_view, name='register'),
     path('login/', user_login_view, name='login'),
     path('shoes-order/<int:pk>', user_login_view, name='shoes-order'),
-    path('shoes-order/<int:pk>', user_login_view, name='shoes-order'),
+    path('profile/', profile, name='user-profile'),
+    path('order/', order, name='order'),
 ]

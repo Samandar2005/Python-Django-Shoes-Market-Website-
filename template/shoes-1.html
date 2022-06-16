@@ -10,7 +10,7 @@
 
 
 <form action="" method="get">
-  <input class="input" type="text" placeholder="name" name="name" />
+  <input class="input" type="text" placeholder="name" name="name"  value="{{request.COOKIES.name}}"/>
   <input class="input" type="text" placeholder="brand" name="brand" />
   <input class="input" type="text" placeholder="company" name="company" />
   <input class="input" type="text" placeholder="color" name="color" />
@@ -66,7 +66,7 @@
             {% endif %}
 
             {% if 'Xaridor' in user.groups.all.0.name %}
-              <a href="{% url 'shoes-order' item.id %}">Order</a>
+              <a href="{% url 'order' %}">Order</a>
             {% endif %}
           </div>
         </div>

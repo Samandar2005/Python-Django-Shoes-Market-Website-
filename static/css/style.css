@@ -361,7 +361,7 @@ body{
 }
 .carousel-indicators li{
     display:block; margin-bottom:5px; border:1px solid #00a199;
-    margin-bottom: 5px;}
+    margin-bottom: 5px;
 
 }
 .carousel-indicators li.active{
@@ -795,4 +795,3 @@ a:hover {
     height: auto;
     background: #0c0116;
 }
-gallery_section

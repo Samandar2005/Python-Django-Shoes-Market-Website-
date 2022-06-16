@@ -1,5 +1,6 @@
 from cmath import phase
 from unicodedata import name
+from urllib import response
 from django.http import HttpResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404, redirect, render
@@ -8,6 +9,19 @@ from .forms import *
 from django.db.models import Q
 from django.contrib.auth.models import Group
 from django.contrib.auth import login, authenticate
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def profile(request):
+    return render(request, 'user-profile.html')
+
+def order(request):
+    return render(request, 'order.html')
+
+
+
 
 
 def index(request):
@@ -167,31 +181,57 @@ class ShoesListView(ListView):
     template_name = 'shoes-1.html'
     context_object_name = 'shoes'
 
-    def get_queryset(self):
-        url_data = self.request.GET
-        q = Shoes.objects.all()
+    def render_to_response(self, context, ** response_kwargs):
+        response = super().render_to_response(context, **response_kwargs)
 
-        if 'name' in url_data and url_data['name']:
-            q = q.filter(name__icontains=url_data['name'])
-        if 'brand' in url_data and url_data['brand']:
-            q = q.filter(brand__name__icontains=url_data['brand'])
-        if 'company' in url_data and url_data['company']:
-            q = q.filter(company__title__icontains=url_data['company'])
-        if 'color' in url_data and url_data['color']:
-            q = q.filter(color__icontains=url_data['color'])
-        if 'material' in url_data and url_data['material']:
-            q = q.filter(material__name__icontains=url_data['material'])
-        if 'сompound' in url_data and url_data['сompound']:
-            q = q.filter(сompound__name__icontains=url_data['сompound'])
-        if 'the_size' in url_data and url_data['the_size']:
-            q = q.filter(the_size=url_data['the_size'])
-        if 'price' in url_data and url_data['price']:
-            q = q.filter(price=url_data['price'])
-        if 'from_date' in url_data and url_data['from_date']:
-            q = q.filter(date__gte=url_data['from_date'])
-        if 'to_date' in url_data and url_data['to_date']:
-            q = q.filter(date__lte=url_data['to_date'])
-        return q
+        for key, val in self.last_user_query.items():
+            response.set_cookie(key, val)
+        return response
+
+    def get_queryset(self):
+        self.last_user_query = {}
+
+        xaridor = Group.objects.get(name='Xaridor')
+        if self.request.user.has_perm("can_view_shoes") or xaridor in self.request.user.groups.all():
+
+            url_data = self.request.GET
+            if len(list(url_data.items())) == 0:
+                url_data = self.request.COOKIES
+            q = Shoes.objects.all()
+            if 'name' in url_data and url_data['name']:
+                q = q.filter(name__icontains=url_data['name'])
+                self.last_user_query['name'] = url_data['name']
+            if 'brand' in url_data and url_data['brand']:
+                q = q.filter(brand__name__icontains=url_data['brand'])
+                self.last_user_query['brand'] = url_data['brand']
+            if 'company' in url_data and url_data['company']:
+                q = q.filter(company__title__icontains=url_data['company'])
+                self.last_user_query['company'] = url_data['company']
+            if 'color' in url_data and url_data['color']:
+                q = q.filter(color__icontains=url_data['color'])
+                self.last_user_query['color'] = url_data['color']
+
+            if 'material' in url_data and url_data['material']:
+                q = q.filter(material__name__icontains=url_data['material'])
+
+                self.last_user_query['material'] = url_data['material']
+            if 'сompound' in url_data and url_data['сompound']:
+                q = q.filter(сompound__name__icontains=url_data['сompound'])
+
+                self.last_user_query['сompound'] = url_data['сompound']
+            if 'the_size' in url_data and url_data['the_size']:
+                q = q.filter(the_size=url_data['the_size'])
+                self.last_user_query['the_size'] = url_data['the_size']
+            if 'price' in url_data and url_data['price']:
+                q = q.filter(price=url_data['price'])
+                self.last_user_query['price'] = url_data['price']
+            if 'from_date' in url_data and url_data['from_date']:
+                q = q.filter(date__gte=url_data['from_date'])
+                self.last_user_query['from_date'] = url_data['from_date']
+            if 'to_date' in url_data and url_data['to_date']:
+                q = q.filter(date__lte=url_data['to_date'])
+                self.last_user_query['to_date'] = url_data['to_date']
+            return q
 
 
 class ShoesCreateView(CreateView):

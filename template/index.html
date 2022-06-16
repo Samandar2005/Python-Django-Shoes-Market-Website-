@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-	<div>Xush kelibsiz {{user|upper}}!</div>
    <head>
 		 <link rel="shortcut icon" href="https://media.flaticon.com/dist/min/img/favicon.ico">
       <!-- basic -->
@@ -42,25 +41,6 @@
 			 height: 30px;
 			 width: 140px;
 		 }
-		 .header__control-panel{
-			display: flex;
-			margin-top: -50px;
-			margin-left: 830px;
-			}
-			.main-navk{
-				padding: 4px 12px;
-				text-align: center;
-				min-width: 90px;
-				color: white;
-    		text-decoration: none;
-    		outline: none;
-				margin-right: 4px;
-				border-radius: 20px;
-    		cursor: pointer;
-    		transition: color .3s;
-				background-color: #092433;
-    		box-shadow: inset 0 0 0 1px #092433;
-			}
 	 </style>
    <!-- body -->
    <body class="main-layout">
@@ -69,7 +49,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-3">
-					<div class="logo"><a href="#"><img src={% static 'images/logo.png' %}></a></div>
+					<div class="logo"><a href="{% url 'main' %}"><img src={% static 'images/logo.png' %}></a></div>
 				</div>
 				<div class="col-sm-9">
 					<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -83,19 +63,19 @@
                            <a class="nav-item nav-link" href="{% url 'shoes_base' %}">Shoes</a>
                            <a class="nav-item nav-link" href="{% url 'racing-boots' %}">Racing Boots</a>
                            <a class="nav-item nav-link" href="{% url 'contact' %}">Contact</a>
-                           <a class="nav-item nav-link last" href="#"><img src={% static 'images/search_icon.png' %}></a>
-                           <a class="nav-item nav-link last" href="{% url 'contact' %}"><img src={% static 'images/shop_icon.png' %}></a>
+													 {% if  user.is_authenticated %}
+													 	<a class="nav-item nav-link" href="{% url 'user-profile' %}">Profile</a>
+													 {% endif %}
+													 {% if  user.is_anonymous %}
+														<a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+														<a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+													{% endif %}
 
                         </div>
                     </div>
 
                     </nav>
-										{% if  user.is_anonymous %}
-											<div class="header__control-panel">
-														<a class="main-navk" href="{% url 'register' %}">register</a>
-														<a class="main-navk" href="{% url 'login' %}">login</a>
-											</div>
-										{% endif %}
+
 
 				</div>
 			</div>
