@@ -1,10 +1,10 @@
 from django.urls import path
 from .views import *
-
+from django.views.decorators.cache import cache_page
 
 urlpatterns = [
-    path('', main),
-    path('main/', main, name='main'),
+    path('', index),
+    path('main/', index, name='main'),
     path('collection/', collection, name='collection'),
     path('contact/', contact, name="contact"),
     path('racing-boots/', racingboots, name="racing-boots"),
@@ -34,7 +34,7 @@ urlpatterns = [
     path('material/delete/<int:pk>',
          MaterialDeleteView.as_view(), name='material-delete'),
 
-    path('shoes/', ShoesListView.as_view(), name='shoes'),
+    path('shoes/', cache_page(60*60)(ShoesListView.as_view()), name='shoes'),
     path('shoes/add', ShoesCreateView.as_view(), name='shoes-add'),
     path('shoes/change/<int:pk>',
          ShoesUpdateView.as_view(), name='shoes-change'),

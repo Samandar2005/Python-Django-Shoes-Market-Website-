@@ -3,6 +3,12 @@
 <link rel="stylesheet" href={% static 'css/style.css' %}>
 <link rel="stylesheet" href={% static 'css/jquery.mCustomScrollbar.min.css' %}>
 <link rel="stylesheet" href={% static 'css/main2.css' %}>
+<style>
+  .my:hover{
+    color: rgba(0, 0, 0, 0.342);
+
+  }
+</style>
 
 {% if perms.home.can_add_book %}
   <a class="man" href="{% url 'shoes-add' %}">Add</a>
@@ -11,15 +17,14 @@
 
 <form action="" method="get">
   <input class="input" type="text" placeholder="name" name="name"  value="{{request.COOKIES.name}}"/>
-  <input class="input" type="text" placeholder="brand" name="brand" />
+  <input class="input" type="text" placeholder="brand" name="brand"/>
   <input class="input" type="text" placeholder="company" name="company" />
-  <input class="input" type="text" placeholder="color" name="color" />
-  <input class="input" type="text" placeholder="material" name="material" />
-  <input class="input" type="text" placeholder="сompound" name="сompound" />
-  <input class="input" type="number" placeholder="the_size" name="the_size" />
-  <input class="input" type="number" placeholder="price" name="price" />
-  <input class="input" type="date" name="from_date" />
-  <input class="input" type="date" name="to_date" />
+  <input class="input" type="text" placeholder="color" name="color"/>
+  <input class="input" type="text" placeholder="material" name="material"/>
+  <input class="input" type="number" placeholder="the_size" name="the_size"/>
+  <input class="input" type="number" placeholder="price" name="price"/>
+  <input class="input" type="date" name="from_date"/>
+  <input class="input" type="date" name="to_date"/>
 
   <input class="search" type="submit" value="Search" />
 </form>
@@ -58,15 +63,15 @@
           </div>
           <div class="hello">
             {% if perms.home.can_change_book %}
-              <a href="{% url 'shoes-change' item.id %}">Change</a>
+              <a class="my" href="{% url 'shoes-change' item.id %}">Change</a>
             {% endif %}
 
             {% if perms.home.can_delete_book %}
-              <a href="{% url 'shoes-delete' item.id %}">Delete</a>
+              <a  class="my"href="{% url 'shoes-delete' item.id %}">Delete</a>
             {% endif %}
 
             {% if 'Xaridor' in user.groups.all.0.name %}
-              <a href="{% url 'order' %}">Order</a>
+              <a class="my" href="{% url 'order' %}">Order</a>
             {% endif %}
           </div>
         </div>

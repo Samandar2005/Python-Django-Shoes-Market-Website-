@@ -17,11 +17,9 @@ from django.contrib.auth.decorators import login_required
 def profile(request):
     return render(request, 'user-profile.html')
 
+
 def order(request):
     return render(request, 'order.html')
-
-
-
 
 
 def index(request):
@@ -189,6 +187,8 @@ class ShoesListView(ListView):
         return response
 
     def get_queryset(self):
+        import time
+        time.sleep(10)
         self.last_user_query = {}
 
         xaridor = Group.objects.get(name='Xaridor')
@@ -213,12 +213,8 @@ class ShoesListView(ListView):
 
             if 'material' in url_data and url_data['material']:
                 q = q.filter(material__name__icontains=url_data['material'])
-
                 self.last_user_query['material'] = url_data['material']
-            if 'сompound' in url_data and url_data['сompound']:
-                q = q.filter(сompound__name__icontains=url_data['сompound'])
 
-                self.last_user_query['сompound'] = url_data['сompound']
             if 'the_size' in url_data and url_data['the_size']:
                 q = q.filter(the_size=url_data['the_size'])
                 self.last_user_query['the_size'] = url_data['the_size']
@@ -258,11 +254,6 @@ class ShoesDeleteView(DeleteView):
     success_url = '/shoes'
 
 
-def main(request):
-    bks = Shoes.objects.all()
-
-    context = {'shoes': bks}
-    return render(request, "main.html", context=context)
 
 
 def collection(request):

@@ -6,7 +6,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from .serializers import ShoesSerializer
-# Create your views here.
 
 
 def test_api_view(request):
@@ -25,6 +24,7 @@ def test_api_view(request):
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def shoes_api_view(request, pk=0):
+
     if request.method == 'GET':
         if pk == 0:
             return Response(data=ShoesSerializer(instance=Shoes.objects.all(), many=True).data, status=200)
@@ -51,6 +51,10 @@ def shoes_api_view(request, pk=0):
         the_shoes = get_object_or_404(Shoes, pk=pk)
         the_shoes.delete()
         return Response('Deleted', status=200)
+
+
+def brand_api_view(request, pk=0):
+    pass
 
 
 class ShoesListAPIView(ListAPIView):
